@@ -6,7 +6,7 @@
 /*   By: chaepark <chaepark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 13:58:53 by chaepark          #+#    #+#             */
-/*   Updated: 2021/11/25 16:24:02 by chaepark         ###   ########.fr       */
+/*   Updated: 2021/11/25 16:32:28 by chaepark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ char	*save_rest_line(char *prev_line)
 char	*get_next_line(int fd)
 {
 	char		*line;
-	static char	*prev_line[2560];
+	static char	*prev_line[OPEN_MAX];
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (0);
