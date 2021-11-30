@@ -6,7 +6,7 @@
 /*   By: chaepark <chaepark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 13:58:53 by chaepark          #+#    #+#             */
-/*   Updated: 2021/11/25 13:15:49 by chaepark         ###   ########.fr       */
+/*   Updated: 2021/11/30 22:19:40 by chaepark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,10 @@ char	*get_read_all_line(int fd, char *prev_line)
 	char	*buff;
 	ssize_t	check;
 
-	buff = malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (!buff)
+	buff = malloc(sizeof(char) * (BUFFER_SIZE + (long long)1));
+	if (!buff){
 		return (0);
+	}
 	buff[0] = '\0';
 	check = 1;
 	while (!ft_strchr(buff, '\n') && check)
@@ -46,7 +47,7 @@ char	*get_read_all_line(int fd, char *prev_line)
 	return (prev_line);
 }
 
-char	*cp_till_next_line(char *prev_line)
+char	*cp_till_cur_line(char *prev_line)
 {
 	int		i;
 	char	*line;
@@ -71,8 +72,9 @@ char	*cp_till_next_line(char *prev_line)
 
 char	*save_rest_line(char *prev_line)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
+	char	*str;
 
 	i = 0;
 	j = 0;
@@ -83,11 +85,15 @@ char	*save_rest_line(char *prev_line)
 		free(prev_line);
 		return (0);
 	}
+	str = malloc(sizeof(char) * (ft_strlen(prev_line) - i + 1));
+	if (!str)
+		return (0);
 	i++;
 	while (prev_line[i])
-		prev_line[j++] = prev_line[i++];
-	prev_line[j] = '\0';
-	return (prev_line);
+		str[j++] = prev_line[i++];
+	str[j] = '\0';
+	free(prev_line);
+	return (str);
 }
 
 char	*get_next_line(int fd)
@@ -100,7 +106,7 @@ char	*get_next_line(int fd)
 	prev_line = get_read_all_line(fd, prev_line);
 	if (!prev_line)
 		return (0);
-	line = cp_till_next_line(prev_line);
+	line = cp_till_cur_line(prev_line);
 	prev_line = save_rest_line(prev_line);
 	return (line);
 }
