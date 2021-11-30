@@ -6,7 +6,7 @@
 /*   By: chaepark <chaepark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 13:58:53 by chaepark          #+#    #+#             */
-/*   Updated: 2021/11/30 22:19:40 by chaepark         ###   ########.fr       */
+/*   Updated: 2021/12/01 00:15:23 by chaepark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,8 @@ char	*get_read_all_line(int fd, char *prev_line)
 	ssize_t	check;
 
 	buff = malloc(sizeof(char) * (BUFFER_SIZE + (long long)1));
-	if (!buff){
+	if (!buff)
 		return (0);
-	}
 	buff[0] = '\0';
 	check = 1;
 	while (!ft_strchr(buff, '\n') && check)
